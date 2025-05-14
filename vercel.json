@@ -1,0 +1,16 @@
+{
+    "version": 2,
+    "name": "MathFunctions",
+    "builds": [
+        {
+            "src": "build/index.html",
+            "use": "@vercel/static"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "build/index.html"
+        }
+    ]
+}

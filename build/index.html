@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma de Aprendizado Matemático</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center mb-4">Plataforma de Aprendizado Matemático</h1>
+                
+                <!-- Navigation Tabs -->
+                <ul class="nav nav-tabs justify-content-center mb-4" id="mathTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="functions-tab" data-bs-toggle="tab" data-bs-target="#functions" type="button" role="tab">Funções</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="limits-tab" data-bs-toggle="tab" data-bs-target="#limits" type="button" role="tab">Limites</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="graphs-tab" data-bs-toggle="tab" data-bs-target="#graphs" type="button" role="tab">Gráficos</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="explanations-tab" data-bs-toggle="tab" data-bs-target="#explanations" type="button" role="tab">Explicações</button>
+                    </li>
+                </ul>
+
+                <!-- Tab Content -->
+                <div class="tab-content" id="mathTabsContent">
+                    <!-- Funções Tab -->
+                    <div class="tab-pane fade show active" id="functions" role="tabpanel">
+                        <div class="row">
+                            <div class="col-md-6 offset-md-3">
+                                <div class="card">
+                                    <div class="card-header bg-primary text-white">
+                                        Calculadora de Funções
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <label for="functionType" class="form-label">Tipo de Função</label>
+                                            <select id="functionType" class="form-select">
+                                                <option value="linear">f(x) = ax + b</option>
+                                                <option value="quadratic">f(x) = ax² + bx + c</option>
+                                            </select>
+                                        </div>
+
+                                        <div id="linearParams">
+                                            <div class="mb-3">
+                                                <label for="linearA" class="form-label">a (Coeficiente angular)</label>
+                                                <input type="number" class="form-control" id="linearA" placeholder="Digite o valor de a">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="linearB" class="form-label">b (Coeficiente linear)</label>
+                                                <input type="number" class="form-control" id="linearB" placeholder="Digite o valor de b">
+                                            </div>
+                                        </div>
+
+                                        <div id="quadraticParams" style="display: none;">
+                                            <div class="mb-3">
+                                                <label for="quadraticA" class="form-label">a (Coeficiente de x²)</label>
+                                                <input type="number" class="form-control" id="quadraticA" placeholder="Digite o valor de a">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="quadraticB" class="form-label">b (Coeficiente de x)</label>
+                                                <input type="number" class="form-control" id="quadraticB" placeholder="Digite o valor de b">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="quadraticC" class="form-label">c (Termo constante)</label>
+                                                <input type="number" class="form-control" id="quadraticC" placeholder="Digite o valor de c">
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="xValue" class="form-label">Valor de x</label>
+                                            <input type="number" class="form-control" id="xValue" placeholder="Digite o valor de x">
+                                        </div>
+
+                                        <button id="calculateBtn" class="btn btn-primary w-100">Calcular</button>
+
+                                        <div id="result" class="mt-3 text-center"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Limites Tab -->
+                    <div class="tab-pane fade" id="limits" role="tabpanel">
+                        <div class="row">
+                            <div class="col-md-6 offset-md-3">
+                                <div class="card">
+                                    <div class="card-header bg-success text-white">
+                                        Calculadora de Limites
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <label for="limitFunction" class="form-label">Função</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="limitFunction" placeholder="Exemplo: sqrt(x) ou x^2 + 2x">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Símbolos</button>
+                                                    <div class="dropdown-menu mathematical-symbols">
+                                                        <button class="dropdown-item math-symbol" data-symbol="sqrt(">√ raiz quadrada</button>
+                                                        <button class="dropdown-item math-symbol" data-symbol="^(1/2)">² raiz quadrada</button>
+                                                        <button class="dropdown-item math-symbol" data-symbol="^(1/3)">³ raiz cúbica</button>
+                                                        <button class="dropdown-item math-symbol" data-symbol="abs(">| | valor absoluto</button>
+                                                        <button class="dropdown-item math-symbol" data-symbol="^">Potência (^)</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="limitApproach" class="form-label">Aproximação</label>
+                                            <select id="limitApproach" class="form-select">
+                                                <option value="positive">x → a⁺ (pela direita)</option>
+                                                <option value="negative">x → a⁻ (pela esquerda)</option>
+                                                <option value="both">x → a (ambos os lados)</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="limitPoint" class="form-label">Ponto de Aproximação (a)</label>
+                                            <input type="number" class="form-control" id="limitPoint" placeholder="Digite o valor de a">
+                                        </div>
+                                        <button id="calculateLimitBtn" class="btn btn-success w-100">Calcular Limite</button>
+                                        <div id="limitResult" class="mt-3 text-center"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gráficos Tab -->
+                    <div class="tab-pane fade" id="graphs" role="tabpanel">
+                        <div class="row">
+                            <div class="col-md-8 offset-md-2">
+                                <div class="card">
+                                    <div class="card-header bg-warning text-white">
+                                        Gerador de Gráficos
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <label for="graphFunction" class="form-label">Função</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="graphFunction" placeholder="Exemplo: sqrt(x) ou x^2">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Símbolos</button>
+                                                    <div class="dropdown-menu mathematical-symbols">
+                                                        <button class="dropdown-item math-symbol" data-symbol="sqrt(">√ raiz quadrada</button>
+                                                        <button class="dropdown-item math-symbol" data-symbol="^(1/2)">² raiz quadrada</button>
+                                                        <button class="dropdown-item math-symbol" data-symbol="^(1/3)">³ raiz cúbica</button>
+                                                        <button class="dropdown-item math-symbol" data-symbol="abs(">| | valor absoluto</button>
+                                                        <button class="dropdown-item math-symbol" data-symbol="^">Potência (^)</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="xMin" class="form-label">X Mínimo</label>
+                                                    <input type="number" class="form-control" id="xMin" value="-10">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="xMax" class="form-label">X Máximo</label>
+                                                    <input type="number" class="form-control" id="xMax" value="10">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button id="plotGraphBtn" class="btn btn-warning w-100">Plotar Gráfico</button>
+                                        <div class="mt-3">
+                                            <canvas id="functionGraph"></canvas>
+                                            <div id="graphResult" class="mt-3 text-center"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Explanations Tab -->
+        <div class="tab-pane fade" id="explanations" role="tabpanel">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-10 offset-md-1">
+                        <div class="card">
+                            <div class="card-header bg-info text-white">
+                                Conceitos Matemáticos Fundamentais
+                            </div>
+                            <div class="card-body">
+                                <div class="accordion" id="mathematicalConceptsAccordion">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="functionsHeader">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#functionsCollapse">
+                                                Funções Matemáticas
+                                            </button>
+                                        </h2>
+                                        <div id="functionsCollapse" class="accordion-collapse collapse show" aria-labelledby="functionsHeader">
+                                            <div class="accordion-body">
+                                                <p>Uma função é uma relação que associa cada elemento de um conjunto de entrada a um único elemento de um conjunto de saída.</p>
+                                                <h5>Tipos de Funções:</h5>
+                                                <ul>
+                                                    <li><strong>Linear:</strong> f(x) = ax + b</li>
+                                                    <li><strong>Quadrática:</strong> f(x) = ax² + bx + c</li>
+                                                    <li><strong>Raíz Quadrada:</strong> f(x) = √x</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="limitsHeader">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#limitsCollapse">
+                                                Limites
+                                            </button>
+                                        </h2>
+                                        <div id="limitsCollapse" class="accordion-collapse collapse" aria-labelledby="limitsHeader">
+                                            <div class="accordion-body">
+                                                <p>Limite representa o valor que uma função se aproxima quando x tende a um determinado ponto.</p>
+                                                <h5>Tipos de Aproximação:</h5>
+                                                <ul>
+                                                    <li><strong>Pela Direita (x → a⁺):</strong> Aproximação de valores maiores que a</li>
+                                                    <li><strong>Pela Esquerda (x → a⁻):</strong> Aproximação de valores menores que a</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="graphsHeader">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#graphsCollapse">
+                                                Gráficos
+                                            </button>
+                                        </h2>
+                                        <div id="graphsCollapse" class="accordion-collapse collapse" aria-labelledby="graphsHeader">
+                                            <div class="accordion-body">
+                                                <p>Representação visual de uma função matemática no plano cartesiano.</p>
+                                                <h5>Dicas para Plotagem:</h5>
+                                                <ul>
+                                                    <li>Escolha o intervalo de x adequado</li>
+                                                    <li>Verifique o domínio da função</li>
+                                                    <li>Observe características como continuidade e descontinuidade</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Math.js for advanced function parsing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
